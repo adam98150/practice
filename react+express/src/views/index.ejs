@@ -1,0 +1,7 @@
+<% include partials/header %>
+<h1> <%= title %> </h1>
+<div> <% people.forEach((user) => { %>
+    <li> <%= user.name %> </li>
+<% }) %> </div>
+<% include partials/footer %>
+    
