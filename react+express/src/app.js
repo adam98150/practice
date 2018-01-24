@@ -37,7 +37,6 @@ app.use(express.static(path.join(__dirname, 'src')));
 
 // Get Request, Sending Reponse to Browser
 app.get('/', (req, res) => {
-
     res.render('index', {
         title: 'New Title',
         people: people
@@ -47,5 +46,3 @@ app.get('/', (req, res) => {
 app.listen(3000, (req, res) => {
     console.log("server started...")
 });
-
-
