@@ -1,3 +1,5 @@
+
+
 const express = require('express');
 const bodyParser = require('body-parser');
 const path = require('path');
@@ -5,47 +7,33 @@ const path = require('path');
 const app = express();
 
 let people = [{
-        name: "Alex",
-        age: "26"
+        name: "adam",
+        surname: "sergi"
     },
     {
-        name: "Lee",
-        age: "22"
-    },
-    {
-        name: "Ajax",
-        age: "20"
-    }];
+        name: "lee",
+        surname: "sergi"
+    }]
 
-//Middleware
-/*let logger = (req, res, next) => {
-    console.log('logging....')
-    next();
-}
-app.use(logger)*/
+app.listen(3000, (req, res) => {
+    console.log('listening')
+});
 
-// View Engine
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 
-// Body-parser Middleware
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
 
-// Set Static Path
 app.use(express.static(path.join(__dirname, 'src')));
 
-// Get Request, Sending Reponse to Browser
 app.get('/', (req, res) => {
-
     res.render('index', {
-        title: 'New Title',
-        people: people
-    })
-})
-
-app.listen(3000, (req, res) => {
-    console.log("server started...")
+                title: "title",
+                people: people
+    });
 });
 
-
+app.post('/users/add', (req, res) => {
+    res.send(`${req.body.first_name} ${req.body.last_name}`)
+});
