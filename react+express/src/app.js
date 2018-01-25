@@ -1,39 +1,23 @@
-
-
 const express = require('express');
 const bodyParser = require('body-parser');
 const path = require('path');
+const routes = require('../routes/index');
+const hbs = require('express-handlebars');
 
 const app = express();
+app.set('port', 8080);
 
-let people = [{
-        name: "adam",
-        surname: "sergi"
-    },
-    {
-        name: "lee",
-        surname: "sergi"
-    }]
-
-app.listen(3000, (req, res) => {
-    console.log('listening')
-});
-
-app.set('view engine', 'ejs');
-app.set('views', path.join(__dirname, 'views'));
+// View engine
+app.engine('hbs', hbs({ extname: 'hbs', defaultLayout: 'index', layoutsDir: __dirname + '/views' }));
+app.set('views', path.join(__dirname, '/views'));
+app.set('view engine', 'hbs');
 
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({extended: false}));
-
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'src')));
 
-app.get('/', (req, res) => {
-    res.render('index', {
-                title: "title",
-                people: people
-    });
-});
+app.use('/', routes);
 
-app.post('/users/add', (req, res) => {
-    res.send(`${req.body.first_name} ${req.body.last_name}`)
+app.listen(8080, (req, res) => {
+    console.log(`Server started at ${app.get('port')}`)
 });
